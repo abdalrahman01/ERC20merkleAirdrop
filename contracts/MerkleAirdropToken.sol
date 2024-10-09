@@ -20,6 +20,9 @@ contract MerkleAirdropToken is ERC20, Ownable {
 
      // Function to claim tokens
     function claimTokens(uint256 amount, bytes32[] calldata merkleProof) external {
+        
+        // this require statment will prevent users from doing multiple tx. e.g. if msg.sender buys tokens one time he will be registered as claimed. Then he will not be able to buy again. 
+        // suggestion: to fix this, instead store the hash of (msg.sender + timestamp of the tx + amount)  
         require(!claimed[msg.sender], "Tokens already claimed");
 
         // Compute the leaf node (address + amount)
